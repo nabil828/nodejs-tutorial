@@ -128,18 +128,21 @@ found 0 vulnerabilities
 - Change the entry point to `server.js` in the `package.josn` file. This the home page of the server when it the http://localhost:port url s requested.  
 
 - [[Source]](https://expressjs.com/en/5x/api.html#express) Create an Express.js application by copying these two line
-```
+
+```js
 const express = require('express')
 const app = express()
 ```
 into your server.js .
 
 - [[Source]](https://expressjs.com/en/5x/api.html#app.listen) Assign port 5000 to the server using the following code:
-```
+
+```js
 app.listen(5000)
 ```
 **OR** even better, add a callback function as a second argument to the previous `listen` function so we can print out any errors on the run time:
-```
+
+```js
 app.listen(5000, function(err){
   if(err) console.log(err);
   })
@@ -155,7 +158,7 @@ We will fix the server to accept GET request soon 😉.
 
 - You may now add a handle for GET requests:
 
-```
+```js
 app.get('/', function (req, res) {
   res.send('GET request to homepage')
 })
@@ -186,7 +189,7 @@ Here, `res.send()` method will send a text or HTML response to the client. Alter
 ## Query String Parameters
 You may use
 
-```
+```js
 app.get('/', function (req, res) {
     res.write(`Weather of ${req.query["q"]} is 4.8 Celsius. `);
     res.write(`Your API key is ${req.query["appkey"]} . `);
@@ -199,7 +202,7 @@ Later, we will build a database that we will use to store the weather related in
 ## Sending JSON
 You may send JSON object instead of HTML to the client using the `res.json()` method:
 
-```
+```js
 app.get('/', function (req, res) {
     res.json(
         {
@@ -216,7 +219,7 @@ app.get('/', function (req, res) {
 ```
 
 ### Sending JSON object from a file
-```
+```js
 app.get('/', function (req, res) {
     console.log(collection["cities"])
    res.json(collection["cities"].find(
@@ -228,7 +231,7 @@ app.get('/', function (req, res) {
 for the data.js files
 
 
-```
+```js
 collection = {
    "cities":[
       {
@@ -337,7 +340,8 @@ Output
 
 now, replace "Vancouver" with a Query string parameter:
 http://localhost:5000/?q=Vancouver
-```
+
+```js
 app.get('/', function (req, res) {
     console.log(collection["cities"])
    res.json(collection["cities"].find(
@@ -352,7 +356,7 @@ Output
 Suppose that the valid API keys are stored in
 valid_keys.js
 
-```
+```js
 valid_keys = {
     "keys" : [
         "123456",
@@ -367,7 +371,7 @@ module.exports = valid_keys;
 
 Now in server.js we can modify our route as such:
 
-```
+```js
 app.get('/', function (req, res) {
     // console.log(collection["cities"])
     if (valid_keys["keys"].find(
@@ -401,7 +405,7 @@ You might need the following installed:
 # In-class Exercise
 Add new *route*, `/home` that will send the following html snippet to the client requests  
 
-```
+```html
 <h1> Home <h1>
 <p> This is my first web server! </p>
 
@@ -410,8 +414,8 @@ Add new *route*, `/home` that will send the following html snippet to the client
 # Deploy your site to Heroku
 First change the listening port to
 
-```
-app.listen(proess.env.PORT || 5000, function (err) {
+```js
+app.listen(process.env.PORT || 5000, function (err) {
     if (err)
         console.log(err);
 })
@@ -420,7 +424,7 @@ so Heroku can set a port number dynamically.
 
 In the terminal in VSCode, execute the following  
 
-```
+```js
 git init
 ```
 to initialize  a repository.
